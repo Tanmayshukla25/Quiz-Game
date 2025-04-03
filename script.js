@@ -9,12 +9,12 @@ let timer=10;
 let score=0;
 let gameinterval;
 let arr = [
-    { q: "12+8", a: "20", option: ["10", "20", "26", "30"] },
-    { q: "25-7", a: "18", option: ["12", "16", "18", "20"] },
-    { q: "6*4", a: "24", option: ["22", "26", "24", "20"] },
-    { q: "36/6", a: "6", option: ["2", "4", "6", "8"] },
-    { q: "90-55", a: "35", option: ["25", "30", "35", "45"] },
-    { q: "13*7", a: "91", option: ["76", "91", "45", "86"] }
+    { q: "12+8", a: 20, option: [10, 20, 26, 30] },
+    { q: "25-7", a: 18, option: [12, 16, 18, 20] },
+    { q: "6*4", a: 24, option: [22, 26, 24, 20] },
+    { q: "36/6", a: 6, option: [2, 4, 6, 8] },
+    { q: "90-55", a: 35, option: [25, 30, 35, 45] },
+    { q: "13*7", a: 91, option: [76, 91, 45, 86] }
 ];
 
 StartQuiz.addEventListener("click", () => {
@@ -67,17 +67,16 @@ function displayQuestion(i) {
 }
 
 function gamestart(){
-    timer=10;
     timerbox.innerText=timer;
+ gameinterval=setInterval(()=>{
+     
 
-    gameinterval=setInterval(()=>{
-        timer--;
-        timerbox.innerText=timer;
-
-        if(timer<=0){
+        if(timer===0){
             clearInterval(gameinterval)
-            endGame();
-            
+            endGame();  
+        }
+        else{
+            timerbox.innerText=--timer;
         }
     },1000)
 
@@ -85,7 +84,7 @@ function gamestart(){
 
 function endGame(){
     option_value.style.display="none";
-    scores.innerHTML= `You have Scored ${score} Out of 6`;
+    scores.innerHTML= `You have Scored ${score} Out of ${arr.length}`;
     scores.style.display="block";
 
 }
