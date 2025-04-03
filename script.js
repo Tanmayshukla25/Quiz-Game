@@ -5,6 +5,8 @@ let timerbox = document.querySelector("#timerbox");
 let scores = document.querySelector("#score");
 let option_value = document.querySelector("#option_value");
 let ChangeBtn = document.querySelector("#ChangeBtn");
+let right = document.querySelector(".right");
+let wrong = document.querySelector(".wrong");
 
 let timer = 5;
 let score = 0;
@@ -22,6 +24,8 @@ let arr = [
 StartQuiz.addEventListener("click", () => {
     StartQuiz.style.display = "none";
     timerbox.style.display = "block";
+    wrong.style.display = "block";
+    right.style.display = "block";
     ChangeBtn.style.display = "block";
 
     i = 0;
@@ -71,6 +75,7 @@ function displayQuestion(index) {
         btn.addEventListener("click", () => {
             if (opt === arr[index].a) {
                 score += 1;
+                btn.classList.add("writeAnswer");
                 scores.innerText = `Score: ${score}`;
             } else {
                 btn.classList.add("error-changes");
