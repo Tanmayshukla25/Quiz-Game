@@ -4,10 +4,12 @@ let btnBox = document.querySelector("#btnBox");
 let timerbox = document.querySelector("#timerbox");
 let scores = document.querySelector("#score");
 let option_value = document.querySelector("#option_value");
+let ChangeBtn = document.querySelector("#ChangeBtn");
 
-let timer=10;
-let score=0;
+let timer = 5;
+let score = 0;
 let gameinterval;
+let i = 0; 
 let arr = [
     { q: "12+8", a: 20, option: [10, 20, 26, 30] },
     { q: "25-7", a: 18, option: [12, 16, 18, 20] },
@@ -19,44 +21,59 @@ let arr = [
 
 StartQuiz.addEventListener("click", () => {
     StartQuiz.style.display = "none";
-    timerbox.style.display="block"
-    gamestart()
-    let i = 0;
+    timerbox.style.display = "block";
+    ChangeBtn.style.display = "block";
+
+    i = 0;
+    score = 0; 
+    scores.innerText = `Score: ${score}`;
+    scores.style.display = "none"; 
+
+    gamestart();
     displayQuestion(i);
 
     let interval = setInterval(() => {
-        i++;
+        // i++;
         if (i < arr.length) {
             displayQuestion(i);
         } else {
             clearInterval(interval);
+            endGame();
         }
-    }, 2000);
+    }, 1000);
 });
 
+ChangeBtn.addEventListener("click", () => {
+    timer = 5;
+    timerbox.innerText = timer;
+    gamestart();
+    i++
+    displayQuestion(i);
+});
 
-function displayQuestion(i) {
-    container.innerText = arr[i].q;
+function displayQuestion(index) {
+    if (index >= arr.length) {
+        endGame();
+        return;
+    }
 
-    
+    container.innerText = arr[index].q;
     btnBox.innerHTML = "";
 
     let box = document.createElement("div");
     box.classList.add("object-box");
-    arr[i].option.forEach(opt => {
+
+    arr[index].option.forEach(opt => {
         let btn = document.createElement("button");
         btn.classList.add("optBtn");
-        
         btn.innerText = opt;
 
-     
         btn.addEventListener("click", () => {
-            if (opt === arr[i].a) {
-                score +=1
-                console.log(score);
-            
+            if (opt === arr[index].a) {
+                score += 1;
+                scores.innerText = `Score: ${score}`;
             } else {
-                btn.classList.add("error-changes")
+                btn.classList.add("error-changes");
             }
         });
 
@@ -66,25 +83,32 @@ function displayQuestion(i) {
     btnBox.appendChild(box);
 }
 
-function gamestart(){
-    timerbox.innerText=timer;
- gameinterval=setInterval(()=>{
-     
+function gamestart() {
+    clearInterval(gameinterval); 
+    timerbox.innerText = timer;
 
-        if(timer===0){
-            clearInterval(gameinterval)
-            endGame();  
+    gameinterval = setInterval(() => {
+        if (timer === 0) {
+            clearInterval(gameinterval);
+            i++;
+            if (i < arr.length-1) {
+                timer = 5;
+                gamestart();
+                displayQuestion(i);
+            } else {
+                endGame();
+            }
+        } else {
+            timerbox.innerText = --timer;
         }
-        else{
-            timerbox.innerText=--timer;
-        }
-    },1000)
-
+    }, 1000);
 }
 
-function endGame(){
-    option_value.style.display="none";
-    scores.innerHTML= `You have Scored ${score} Out of ${arr.length}`;
-    scores.style.display="block";
-
+function endGame() {
+    clearInterval(gameinterval);
+    option_value.style.display = "none";
+    scores.innerHTML = `You have Scored ${score} Out of ${arr.length}`;
+    scores.style.display = "block";
+    btnBox.innerHTML = ""; 
+    container.innerText = "Game Over!"; 
 }
