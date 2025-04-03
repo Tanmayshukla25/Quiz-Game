@@ -44,7 +44,7 @@ StartQuiz.addEventListener("click", () => {
             clearInterval(interval);
             endGame();
         }
-    }, 1000);
+    }, 6000);
 });
 
 ChangeBtn.addEventListener("click", () => {
@@ -79,6 +79,7 @@ function displayQuestion(index) {
                 scores.innerText = `Score: ${score}`;
             } else {
                 btn.classList.add("error-changes");
+                
             }
         });
 
@@ -105,6 +106,7 @@ function gamestart() {
             }
         } else {
             timerbox.innerText = --timer;
+            
         }
     }, 1000);
 }
@@ -115,5 +117,5 @@ function endGame() {
     scores.innerHTML = `You have Scored ${score} Out of ${arr.length}`;
     scores.style.display = "block";
     btnBox.innerHTML = ""; 
-    container.innerText = "Game Over!"; 
+   
 }
