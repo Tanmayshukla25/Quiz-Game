@@ -77,3 +77,8 @@ body{
     flex-wrap: wrap;
 
 }
+@media screen and (min-width:320px) and (max-width:570px){
+    #score{
+        font-size: 20px;
+    }
+}
