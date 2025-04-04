@@ -73,11 +73,15 @@ function displayQuestion(index) {
         btn.innerText = opt;
 
         btn.addEventListener("click", () => {
+            let allButtons = document.querySelectorAll(".optBtn");
+            allButtons.forEach(button => button.disabled = true);
+
             if (opt === arr[index].a) {
                 score += 1;
                 btn.classList.add("writeAnswer");
                 scores.innerText = `Score: ${score}`;
-            } else {
+            }
+             else {
                 btn.classList.add("error-changes");
                 
             }
