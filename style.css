@@ -67,7 +67,11 @@ background-color: rgba(128, 0, 128, 0.699);
     top: 50px;
 display: none;
     color: white;
-    background-color: blueviolet;
+    background-image: url(./imges2.avif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
     text-align: center;
 }
 .right{

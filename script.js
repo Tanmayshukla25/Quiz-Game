@@ -42,7 +42,6 @@ form.addEventListener("submit", (e) => {
   
     
     data.push(obj);
-    // console.log(data);
     
     localStorage.setItem("data", JSON.stringify(data));
     input.value = "";
@@ -66,7 +65,7 @@ form.addEventListener("submit", (e) => {
     displayQuestion(i);
 
     let interval = setInterval(() => {
-        // i++;
+        
         if (i < arr.length) {
             displayQuestion(i);
         } else {
@@ -179,26 +178,62 @@ function endGame() {
     option_value.style.display = "none";
   })
 
-  btnboard.addEventListener("click",()=>{
-   let CopyLocalDATA= JSON.parse (localStorage.getItem("data"));
-  
-  
-   
-   
-   CopyLocalDATA.forEach((val)=>{
+  btnboard.addEventListener("click", () => {
+    let CopyLocalDATA = JSON.parse(localStorage.getItem("data"));
+    copyData.innerHTML = "";
+    copyData.style.display = "block";
 
-    copyData.style.display="block"
-    let parentDiv=document.createElement("div")
-    let para = document.createElement("span")
-    let para2 = document.createElement("span")
-    let para3 = document.createElement("span")
-    para.innerText=val.name
-    para2.innerText=val.date
-    para3.innerText=val.score
-    parentDiv.append(para,para2,para3);
-    copyData.append(parentDiv)
-   
+    CopyLocalDATA.sort((a, b) => b.score - a.score);
   
-    
-   })
-  })
+    let table = document.createElement("table");
+    table.style.color="black"
+    table.style.fontSize="20px"
+    table.style.borderCollapse = "collapse";
+    table.style.width = "100%";
+  
+    let thead = document.createElement("thead");
+    let headerRow = document.createElement("tr");
+  
+    let headers = ["Name", "Date", "Score"];
+    headers.forEach(text => {
+      let th = document.createElement("th");
+      th.innerText = text;
+      th.style.border = "1px solid black";
+      th.style.padding = "8px";
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+  
+    let tbody = document.createElement("tbody");
+    tbody.style.color="black"
+    tbody.style.fontSize="20px"
+    CopyLocalDATA.forEach(val => {
+      let dataRow = document.createElement("tr");
+  
+      let cell1 = document.createElement("td");
+      cell1.innerText = val.name;
+      cell1.style.border = "1px solid black";
+      cell1.style.padding = "8px";
+  
+      let cell2 = document.createElement("td");
+      cell2.innerText = val.date;
+      cell2.style.border = "1px solid black";
+      cell2.style.padding = "8px";
+  
+      let cell3 = document.createElement("td");
+      cell3.innerText = val.score;
+      cell3.style.border = "1px solid black";
+      cell3.style.padding = "8px";
+  
+      dataRow.append(cell1, cell2, cell3);
+      tbody.appendChild(dataRow);
+    });
+  
+    table.append(thead, tbody);
+    copyData.appendChild(table);
+  });
+
+
+  window.addEventListener("load",()=>{
+    localStorage.clear();
+  })  
