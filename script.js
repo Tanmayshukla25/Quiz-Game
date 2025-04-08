@@ -5,9 +5,12 @@ let timerbox = document.querySelector("#timerbox");
 let scores = document.querySelector("#score");
 let option_value = document.querySelector("#option_value");
 let ChangeBtn = document.querySelector("#ChangeBtn");
+let copyData = document.querySelector("#copyData");
+let btnboard = document.querySelector("#btnboard");
 let right = document.querySelector(".right");
 let Inputbox = document.querySelector("#Inputbox");
 let wrong = document.querySelector(".wrong");
+let header = document.querySelector("#header");
 
 const data =   localStorage.getItem("data") !== null
 ? JSON.parse(localStorage.getItem("data")) : [];
@@ -19,6 +22,7 @@ let timer = 5;
 let score = 0;
 let gameinterval;
 let i = 0; 
+
 
 let obj = {};
 let arr = [
@@ -38,7 +42,7 @@ form.addEventListener("submit", (e) => {
   
     
     data.push(obj);
-    console.log(data);
+    // console.log(data);
     
     localStorage.setItem("data", JSON.stringify(data));
     input.value = "";
@@ -51,6 +55,7 @@ form.addEventListener("submit", (e) => {
     right.style.display = "block";
     ChangeBtn.style.display = "block";
     option_value.style.display = "block";
+    copyData.style.display = "none";
 
     i = 0;
     score = 0; 
@@ -160,14 +165,40 @@ function endGame() {
     
    
 }
-
-
-
-
-
   
   function storeScoreInLS(score) {
     const dataArr = JSON.parse(localStorage.getItem("data"));
     dataArr[dataArr.length - 1].score = score;
     localStorage.setItem("data", JSON.stringify(dataArr));
   }
+
+
+  header.addEventListener("click",()=>{
+    Inputbox.style.display = "block";
+    StartQuiz.style.display = "block";
+    option_value.style.display = "none";
+  })
+
+  btnboard.addEventListener("click",()=>{
+   let CopyLocalDATA= JSON.parse (localStorage.getItem("data"));
+  
+  
+   
+   
+   CopyLocalDATA.forEach((val)=>{
+
+    copyData.style.display="block"
+    let parentDiv=document.createElement("div")
+    let para = document.createElement("span")
+    let para2 = document.createElement("span")
+    let para3 = document.createElement("span")
+    para.innerText=val.name
+    para2.innerText=val.date
+    para3.innerText=val.score
+    parentDiv.append(para,para2,para3);
+    copyData.append(parentDiv)
+   
+  
+    
+   })
+  })
