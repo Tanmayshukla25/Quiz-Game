@@ -6,12 +6,21 @@ let scores = document.querySelector("#score");
 let option_value = document.querySelector("#option_value");
 let ChangeBtn = document.querySelector("#ChangeBtn");
 let right = document.querySelector(".right");
+let Inputbox = document.querySelector("#Inputbox");
 let wrong = document.querySelector(".wrong");
+
+const data =   localStorage.getItem("data") !== null
+? JSON.parse(localStorage.getItem("data")) : [];
+const form = document.querySelector("form");
+const input = document.querySelector("input");
+
 
 let timer = 5;
 let score = 0;
 let gameinterval;
 let i = 0; 
+
+let obj = {};
 let arr = [
     { q: "12+8", a: 20, option: [10, 20, 26, 30] },
     { q: "25-7", a: 18, option: [12, 16, 18, 20] },
@@ -21,12 +30,27 @@ let arr = [
     { q: "13*7", a: 91, option: [76, 91, 45, 86] }
 ];
 
-StartQuiz.addEventListener("click", () => {
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = input.value.trim();
+    obj = { name: value, date: new Date().toLocaleString(), score: 0 };
+
+  
+    
+    data.push(obj);
+    console.log(data);
+    
+    localStorage.setItem("data", JSON.stringify(data));
+    input.value = "";
+ 
+
     StartQuiz.style.display = "none";
+    Inputbox.style.display = "none";
     timerbox.style.display = "block";
     wrong.style.display = "block";
     right.style.display = "block";
     ChangeBtn.style.display = "block";
+    option_value.style.display = "block";
 
     i = 0;
     score = 0; 
@@ -45,7 +69,9 @@ StartQuiz.addEventListener("click", () => {
             endGame();
         }
     }, 6000);
-});
+
+
+  });
 
 ChangeBtn.addEventListener("click", () => {
     timer = 5;
@@ -78,7 +104,10 @@ function displayQuestion(index) {
 
             if (opt === arr[index].a) {
                 score += 1;
+                obj.score=score;
+
                 btn.classList.add("writeAnswer");
+                storeScoreInLS(score) 
                 scores.innerText = `Score: ${score}`;
             }
              else {
@@ -121,5 +150,24 @@ function endGame() {
     scores.innerHTML = `You have Scored ${score} Out of ${arr.length}`;
     scores.style.display = "block";
     btnBox.innerHTML = ""; 
+    i=0;
+    setTimeout(() => {
+        scores.style.display = "none";
+        Inputbox.style.display = "block";
+        StartQuiz.style.display = "block";
+       
+    }, 5000);
+    
    
 }
+
+
+
+
+
+  
+  function storeScoreInLS(score) {
+    const dataArr = JSON.parse(localStorage.getItem("data"));
+    dataArr[dataArr.length - 1].score = score;
+    localStorage.setItem("data", JSON.stringify(dataArr));
+  }

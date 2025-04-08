@@ -11,12 +11,21 @@ body{
 
 }
 
+#Inputbox{
+    width: 200px;
+    padding: 10px 20px;
+    border-radius: 10px 0 0 10px;
+    border: unset;
+    font-size: 18px;
+   margin-right: 3px;
+}
+
 #btn{
-    padding: 15px 20px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 0 10px 10px 0px;
     background-color: red;
     color: white;
-    font-size: 25px;
+    font-size: 18px;
     border: unset;
 
 }
@@ -109,6 +118,12 @@ body{
 }
 #option_value{
     position: relative;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
 }
 
 
