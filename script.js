@@ -134,7 +134,7 @@ function gamestart() {
         if (timer === 0) {
             clearInterval(gameinterval);
             i++;
-            if (i < arr.length-1) {
+            if (i < arr.length + 1) {
                 timer = 5;
                 gamestart();
                 displayQuestion(i);
